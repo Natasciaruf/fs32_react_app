@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import ReactDOM from "react-dom/client";
 import Login from './Login.jsx';
 import Register from './Register.jsx';
+import Dashboard from './Dashboard.jsx';
 
 const root = document.getElementById("root");
 
@@ -15,8 +16,12 @@ ReactDOM.createRoot(root).render(
       <Route path="/" element={<App />} />
       {/* creo la rotta per la login */}
       <Route path='login' element={<Login />} />
+      
       {/* creo la rotta per la registrazione */}
       <Route path='register' element={<Register/>} />
+
+      {/* aggiungo la rotta Dashboard */}
+      <Route path='dashboard' element={<Dashboard/>} />
     </Routes>
   </BrowserRouter>
 );
