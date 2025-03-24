@@ -18,6 +18,23 @@ email: event.target[2].value,
 password: event.target[3].value,
 }
 
+if(data.name == null || data.name == ""){
+    alert("Inserisci il nome per poter continuare ")
+    return 
+} else if(data.surname == null || data.surname == ""){
+  alert("Inserisce il cognome per poter continuare")
+  return
+} else if(data.email == null || data.email== ""){
+alert("Inserisci l'email per continuare")
+return
+} else if(data.password == null || data.password == ""){
+  alert("Inserisci la password per continuare")
+  return
+}
+
+
+
+
 //in una app reale avrei inviato i dati al back-end tramite fetch, aspettando la risposta positiva o meno
 const dataString= JSON.stringify(data)
 localStorage.setItem("userData", dataString)
