@@ -11,32 +11,51 @@ let navigate = useNavigate()
  const handleSubmit = (event) => {
   event.preventDefault()
 
-const data = {
+  //recupero userData dal localStorage che contiene tutti gli utenti registrati 
+  const dataElement = localStorage.getItem("userData")
+  const allUsers = JSON.parse(dataElement)
+
+const newData =  {
 name: event.target[0].value,
 surname: event.target[1].value,
 email: event.target[2].value,
 password: event.target[3].value,
 }
 
-if(data.name == null || data.name == ""){
+
+
+if(newData.name == null || newData.name == ""){
     alert("Inserisci il nome per poter continuare ")
     return 
-} else if(data.surname == null || data.surname == ""){
+} else if(newData.surname == null || newData.surname == ""){
   alert("Inserisce il cognome per poter continuare")
   return
-} else if(data.email == null || data.email== ""){
+} else if(newData.email == null || newData.email== ""){
 alert("Inserisci l'email per continuare")
 return
-} else if(data.password == null || data.password == ""){
+} else if(newData.password == null || newData.password == ""){
   alert("Inserisci la password per continuare")
   return
 }
 
+//verifico se l'email non è già presente tra gli utenti registrati, se si impedisco la registrazione
+
+  allUsers.forEach((element)=> {
+    if(element.email == newData.email){
+    alert("email gia presente") 
+    }
+    })
 
 
+
+
+//aggiungo il nuovo utente all'array di utenti
+allUsers.push(newData)
+
+localStorage.setItem("userSession", JSON.stringify(newData))
 
 //in una app reale avrei inviato i dati al back-end tramite fetch, aspettando la risposta positiva o meno
-const dataString= JSON.stringify(data)
+const dataString= JSON.stringify(allUsers)
 localStorage.setItem("userData", dataString)
 // console.log(event.target[0].value)
 

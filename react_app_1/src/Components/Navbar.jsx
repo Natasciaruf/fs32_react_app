@@ -9,7 +9,7 @@ function Navbar(){
   const [isVisible, setIsVisible] = useState(false)
 
 useEffect(() => {
-  if(localStorage.getItem("userData")){
+  if(localStorage.getItem("userSession")){
     setIsVisible(false)
    }else{
     setIsVisible(true)
@@ -17,7 +17,7 @@ useEffect(() => {
 }, [])
 
 function logOut(){
-localStorage.removeItem("userData")
+localStorage.removeItem("userSession")
 navigate("/login")
 
 }

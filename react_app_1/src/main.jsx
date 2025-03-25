@@ -4,27 +4,49 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter, Routes, Route, redirect } from "react-router";
 import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from './Login.jsx';
 import Register from './Register.jsx';
 import Dashboard from './Dashboard.jsx';
 
 const root = document.getElementById("root");
 
-ReactDOM.createRoot(root).render(
-  <BrowserRouter>
-    <Routes >
-      <Route path="/" element={<App />} />
+async function checkSessions(){
+  if(localStorage.getItem("userSession")){
+   throw redirect("/dashboard")
+  }
+  return null
+}
 
+async function checkNoSession() {
+  if(!localStorage.getItem("userSession")){
+    throw redirect("/login")
+  }
+  return null
+}
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+  {
+    path:"login",
+    element:<Login/>,
+    loader: checkSessions
+  },
+  {
+    path:"register",
+    element:<Register/>,
+    loader: checkSessions
+  },
+{
+  path:"dashboard",
+  element: <Dashboard/>,
+  loader: checkNoSession
+}
 
-      {/* creo la rotta per la login */}
-      <Route path='login' element={<Login />} />
-      
-      {/* creo la rotta per la registrazione */}
-      <Route path='register' element={<Register/>} />
+]);
 
-
-      {/* aggiungo la rotta Dashboard */}
-      <Route path='dashboard' element={<Dashboard/>} />
-    </Routes>
-  </BrowserRouter>
+createRoot(document.getElementById("root")).render(
+  <RouterProvider router={router} />
 );

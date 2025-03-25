@@ -12,11 +12,11 @@ function Login() {
     //se userData nel local storage non esiste lo creo 
     if(localStorage.getItem("userData") == null){
 
-      const emptyData = {name:"", surnmame:"", email: "", password: ""}
+      const emptyData = [{name:"", surname:"", email: "", password: ""}]
      localStorage.setItem("userData", JSON.stringify(emptyData))
     }
 
-    const parseData = JSON.parse(userData);
+    const allUsers = JSON.parse(userData);
     const data = {
       email: event.target[0].value,
       password: event.target[1].value,
@@ -31,15 +31,25 @@ function Login() {
     } else {
       //controllo l'email inserita dall'utente se è uguale a quella inerita nel local storage
       //simulo il login in una app reale è necessario fare un fetch al back-end per verificare se l'utente è registato
-      if (
-        parseData.email == data.email &&
-        parseData.password == data.password
-      ) {
-        // rimando l'utente alla Dashboard
-        navigate("/dashboard");
-      } else {
-        alert("Email o password errati");
-      }
+      
+      allUsers.forEach((element) => {
+        if (
+          element.email == data.email &&
+          element.password == data.password
+        ) {
+          //salvo nel local storage la sessione dell'utente appena loggato
+         localStorage.setItem("userSession", JSON.stringify(data))
+
+          // rimando l'utente alla Dashboard
+          navigate("/dashboard");
+        }
+
+      })
+      
+      alert("Email o password errati")
+      
+      
+  
     }
   };
 
